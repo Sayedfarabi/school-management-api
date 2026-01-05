@@ -15,14 +15,13 @@ export class StudentController {
       phone: string;
       password_hash: string;
       role: UserRole;
-      //   age: number;
     },
   ) {
     return this.studentService.createStudent(data);
   }
 
   @Get()
-  getAllStudents() {
+  async getAllStudents() {
     return this.studentService.getAllStudents();
   }
 }

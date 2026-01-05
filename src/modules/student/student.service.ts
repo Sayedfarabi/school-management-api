@@ -11,16 +11,14 @@ export class StudentService {
     phone: string;
     password_hash: string;
     role: UserRole;
-    //   age: number;
   }) {
     return this.prisma.user.create({ data });
   }
   async getAllStudents() {
     try {
-      return await this.prisma.user.findMany();
-      // return await this.prisma.user.findMany({
-      //   where: { role: UserRole.Student },
-      // });
+      return await this.prisma.user.findMany({
+        where: { role: UserRole.Student },
+      });
     } catch (error) {
       console.log(error);
     }
