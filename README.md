@@ -1,1 +1,2 @@
-// "outputDirectory": "dist"
+    // "build": "nest build",
+    // "start": "nest start",
