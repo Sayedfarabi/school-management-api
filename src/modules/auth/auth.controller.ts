@@ -36,7 +36,7 @@ export class AuthController {
     };
   }
 
-  @Post('signup')
+  @Post('register')
   @ResponseMessage('User created successfully')
   async signUp(
     @Body() data: SignUpDto,

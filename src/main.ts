@@ -10,6 +10,7 @@ import { HttpExceptionFilter } from './common/filters/http_exception/http_except
 import { PrismaExceptionFilter } from './common/filters/prisma_exception/prisma_exception.filter';
 import { TransformResponseInterceptor } from './common/interceptors/transform_response.interceptor';
 import { AllExceptionsFilter } from './common/filters/all_exception/all_exception.filter';
+import { ValidationPipe } from '@nestjs/common';
 
 let server: Server;
 
@@ -33,6 +34,15 @@ async function bootstrap() {
     // for response http error handling
     app.useGlobalInterceptors(
       new TransformResponseInterceptor(new Reflector()),
+    );
+
+    // for validation
+    app.useGlobalPipes(
+      new ValidationPipe({
+        transform: true,
+        whitelist: true,
+        forbidNonWhitelisted: true,
+      }),
     );
 
     // for swagger set meta info

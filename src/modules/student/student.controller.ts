@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Post,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create_student.dto';
 import { ResponseMessage } from 'src/common/decorators/response_message.decorator';
@@ -16,7 +8,6 @@ export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
   @Post()
-  @UsePipes(new ValidationPipe({ transform: true }))
   @ResponseMessage('Student created successfully')
   async createStudent(
     @Body()
