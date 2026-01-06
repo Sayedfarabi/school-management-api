@@ -26,6 +26,13 @@ export class ClassService {
   }
 
   async studentEnrollment(data: { studentId: string; classId: string }) {
+    const isExist = await this.prisma.student.findFirst({
+      where: { id: data.studentId },
+    });
+    if (!isExist) {
+      throw new HttpException('Student not found', HttpStatus.NOT_FOUND);
+    }
+
     // Implementation here
     const result = await this.prisma.student.update({
       where: { id: data.studentId },
