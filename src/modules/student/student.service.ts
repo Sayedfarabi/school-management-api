@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserRole } from 'generated/prisma/enums';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateStudentDto } from './dto/create_student.dto';
@@ -49,8 +50,10 @@ export class StudentService {
       );
       return result;
     } catch (error) {
-      console.log(error);
-      throw error;
+      throw new HttpException(
+        'Failed to create student',
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
   async getAllStudents() {
@@ -67,8 +70,7 @@ export class StudentService {
         },
       });
     } catch (error) {
-      console.log(error);
-      throw error;
+      throw new HttpException('Failed to get students', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -98,8 +100,7 @@ export class StudentService {
         },
       });
     } catch (error) {
-      console.log(error);
-      throw error;
+      throw new HttpException('Failed to get student', HttpStatus.BAD_REQUEST);
     }
   }
 }
