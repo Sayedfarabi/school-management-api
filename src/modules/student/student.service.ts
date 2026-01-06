@@ -9,6 +9,7 @@ import { hashPassword } from 'src/utils/hash_password';
 @Injectable()
 export class StudentService {
   constructor(private prisma: PrismaService) {}
+
   async createStudent(data: CreateStudentDto) {
     try {
       const password = await hashPassword(data?.password_hash);
@@ -56,6 +57,7 @@ export class StudentService {
       );
     }
   }
+
   async getAllStudents() {
     try {
       return await this.prisma.user.findMany({
