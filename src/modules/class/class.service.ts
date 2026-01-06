@@ -6,6 +6,7 @@ import { CreateClassDto } from './dto/create_class.dto';
 @Injectable()
 export class ClassService {
   constructor(private prisma: PrismaService) {}
+
   async createClass(data: CreateClassDto) {
     try {
       // Check if class with the same name and section already exists
