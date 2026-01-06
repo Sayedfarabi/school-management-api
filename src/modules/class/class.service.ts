@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateClassDto } from './dto/create_class.dto';
 
@@ -6,12 +6,21 @@ import { CreateClassDto } from './dto/create_class.dto';
 export class ClassService {
   constructor(private prisma: PrismaService) {}
   async createClass(data: CreateClassDto) {
+    // Check if class with the same name and section already exists
+    const isExist = await this.prisma.class.findFirst({
+      where: { name: data?.name, section: data?.section },
+    });
+
+    if (isExist) {
+      throw new HttpException(
+        'Class with the same name and section already exists',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     // Implementation here
     const result = await this.prisma.class.create({
-      data: {
-        name: data.name,
-        section: data.section,
-      },
+      data,
     });
     return result;
   }

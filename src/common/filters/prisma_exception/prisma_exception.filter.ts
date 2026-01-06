@@ -15,6 +15,7 @@ export class PrismaExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
     let message = 'An unexpected error occurred.';
+    // console.log('Prisma Exception Filter:', exception);
 
     switch (exception.code) {
       case 'P2000':
@@ -131,6 +132,7 @@ export class PrismaExceptionFilter implements ExceptionFilter {
       statusCode: status,
       message,
       error: 'PrismaValidationError',
+      timestamp: new Date().toISOString(),
     });
   }
 }

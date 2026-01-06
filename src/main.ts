@@ -9,6 +9,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { HttpExceptionFilter } from './common/filters/http_exception/http_exception.filter';
 import { PrismaExceptionFilter } from './common/filters/prisma_exception/prisma_exception.filter';
 import { TransformResponseInterceptor } from './common/interceptors/transform_response.interceptor';
+import { AllExceptionsFilter } from './common/filters/all_exception/all_exception.filter';
 
 let server: Server;
 
@@ -26,6 +27,7 @@ async function bootstrap() {
     app.useGlobalFilters(
       new HttpExceptionFilter(),
       new PrismaExceptionFilter(),
+      new AllExceptionsFilter(),
     );
 
     // for response http error handling

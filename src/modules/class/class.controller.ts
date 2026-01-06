@@ -11,7 +11,7 @@ import { ResponseMessage } from 'src/common/decorators/response_message.decorato
 import { CreateClassDto } from './dto/create_class.dto';
 import { EnrollmentClassDto } from './dto/enrollment_class.dto';
 
-@Controller('class')
+@Controller({ path: 'classes', version: '1' })
 export class ClassController {
   constructor(private readonly classService: ClassService) {}
 
