@@ -6,6 +6,9 @@ import { StudentService } from './modules/student/student.service';
 import { StudentController } from './modules/student/student.controller';
 import { StudentModule } from './modules/student/student.module';
 import { ConfigModule } from '@nestjs/config';
+import { ClassService } from './modules/class/class.service';
+import { ClassController } from './modules/class/class.controller';
+import { ClassModule } from './modules/class/class.module';
 import app_config from './config/app.config';
 
 @Module({
@@ -17,8 +20,9 @@ import app_config from './config/app.config';
     }),
     PrismaModule,
     StudentModule,
+    ClassModule,
   ],
-  controllers: [AppController, StudentController],
-  providers: [AppService, StudentService],
+  controllers: [AppController, StudentController, ClassController],
+  providers: [AppService, StudentService, ClassService],
 })
 export class AppModule {}
