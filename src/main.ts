@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Server } from 'http';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { HttpExceptionFilter } from './common/filters/http_exception/http_exception.filter';
+import { PrismaExceptionFilter } from './common/filters/prisma_exception/prisma_exception.filter';
+import { TransformResponseInterceptor } from './common/interceptors/transform_response.interceptor';
 
 let server: Server;
 
@@ -19,6 +21,17 @@ async function bootstrap() {
       origin: ['*'],
       credentials: true,
     });
+
+    // for global error handling
+    app.useGlobalFilters(
+      new HttpExceptionFilter(),
+      new PrismaExceptionFilter(),
+    );
+
+    // for response http error handling
+    app.useGlobalInterceptors(
+      new TransformResponseInterceptor(new Reflector()),
+    );
 
     // for swagger set meta info
     const options = new DocumentBuilder()

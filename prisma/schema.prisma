@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider     = "prisma-client"
   output       = "../generated/prisma"
@@ -18,30 +12,56 @@ model User {
   id            String   @id @default(uuid())
   name          String
   email         String   @unique
-  phone         String   @unique
+  phone         String
   password_hash String
-  role          UserRole
+  role          UserRole @default(Student)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-  // student       Student?
+  student       Student?
 
+  @@index([email])
   @@map("users")
 }
 
-// model Student {
-//   id        String   @id @default(uuid())
-//   user      User     @relation(fields: [userId], references: [id])
-//   userId    String   @unique
-//   name      String
-//   age       Int
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
+model Class {
+  id      String @id @default(uuid())
+  name    String
+  section String
 
-//   @@map("students")
-// }
+  students Student[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([name, section])
+  @@map("classes")
+}
+
+model Student {
+  id   String @id @default(uuid())
+  name String
+  age  Int
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  classId String?
+  class   Class?  @relation(fields: [classId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([classId])
+  @@map("students")
+}
 
 enum UserRole {
   Admin
   Teacher
   Student
+}
+
+enum ClassSection {
+  Morning
+  Evening
 }
