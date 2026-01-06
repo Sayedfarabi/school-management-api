@@ -29,7 +29,22 @@ export class StudentService {
               age: data.age,
             },
           });
-          return { user, student };
+          return {
+            student: {
+              id: student.id,
+              name: student.name,
+              age: student.age,
+              createdAt: student.createdAt,
+            },
+            user: {
+              id: user.id,
+              name: user.name,
+              email: user.email,
+              phone: user.phone,
+              role: user.role,
+              createdAt: user.createdAt,
+            },
+          };
         },
       );
       return result;
@@ -57,10 +72,10 @@ export class StudentService {
     }
   }
 
-  async getStudentById(studentId: string) {
+  async getStudentById(id: string) {
     try {
-      return await this.prisma.student.findUniqueOrThrow({
-        where: { id: studentId },
+      return await this.prisma.student.findUnique({
+        where: { id },
         include: {
           user: {
             select: {

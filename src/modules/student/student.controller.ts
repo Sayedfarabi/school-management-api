@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   UsePipes,
   ValidationPipe,
@@ -25,7 +26,14 @@ export class StudentController {
   }
 
   @Get()
+  @ResponseMessage('Students are fetched successfully')
   async getAllStudents() {
     return this.studentService.getAllStudents();
+  }
+
+  @Get(':id')
+  @ResponseMessage('Student is fetched successfully')
+  async getStudentById(@Param('id') id: string) {
+    return this.studentService.getStudentById(id);
   }
 }
