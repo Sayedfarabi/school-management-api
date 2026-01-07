@@ -8,7 +8,7 @@ import { UserRole } from 'generated/prisma/enums';
 import { AuthGuard } from 'src/common/guards/auth.guard';
 import { RolesGuard } from 'src/common/guards/role.guard';
 
-@Controller({ path: 'classes', version: '1' })
+@Controller({ path: 'api/classes', version: '1' })
 export class ClassController {
   constructor(private readonly classService: ClassService) {}
 

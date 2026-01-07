@@ -5,7 +5,7 @@ import { SignInDto } from './dto/signin_user.dto';
 import { ResponseMessage } from 'src/common/decorators/response_message.decorator';
 import { SignUpDto } from './dto/signup_user.dto';
 
-@Controller({ path: 'auth', version: '1' })
+@Controller({ path: 'api/auth', version: '1' })
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
